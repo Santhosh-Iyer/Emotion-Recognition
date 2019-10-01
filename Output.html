@@ -1,0 +1,136 @@
+<html>
+<body>
+<style>
+body{
+	margin: 0px;
+}
+h1{
+	margin: 0px;
+	border: none;
+	padding: 15px 0px;
+	background-color: #0B9865;
+	color: white;
+	text-align: center;
+}
+h1 span{
+	position: absolute;
+	right: 40px;
+	top: 20px;
+	font-size: 14px;
+	
+}
+img{
+	position: absolute;
+	height: 68px;
+	width: 250px;
+	margin: 0px;
+	
+}
+#mainvid{
+	position: relative;
+	left: 20px;
+	border: none;
+	margin:0px;
+	padding-top: 10px;
+	padding-bottom: 0px;
+	width: 600px;
+	height: 340px;
+}
+#video{
+	opacity: 0;
+	position: absolute;
+	left: 20px;
+	
+}
+#suggest{
+	padding-left: 40px;
+}
+#suggest iframe{
+	padding: 0px 10px;
+	width: 22%;
+	border: none;
+}
+#canvas{
+	position: relative;
+	top: -15px;
+	margin: 0px;
+	left: 20px;
+}
+button{
+	position: relative;
+	left: 300px;
+	width: 70px;
+	height: 25px;
+	margin: 20px 40px;
+	color: white;
+	background-color: #0B5898;
+	border-radius: 5px;
+	border: none;
+	font-family: Garamond;
+	font-size: 15px;
+	transition: height 0.5s,width 0.5s,font-size 0.5s;
+}
+button:hover{
+	width: 80px;
+	height: 30px;
+	font-size: 18px;
+	cursor: pointer;
+	background-color: #54980B;
+}	
+h1 span:hover{
+	cursor: pointer;
+}
+
+</style>
+<img src="sastralogo.png"></img>
+<h1>Mini Project
+<span>Sign in</span></h1>
+<iframe  id="mainvid" src="https://www.youtube.com/embed/0AM35Nu5McY"></iframe>
+<video id="video" width="600" height="340" autoplay></video>
+<canvas id="canvas" width="600" height="340"></canvas><br>
+<button id="snap">Capture</button><button onclick="clrimg()">Clear</button><br>
+<div id="suggest" >
+	<iframe src="https://www.youtube.com/embed/ukzFI9rgwfU"></iframe>
+	<iframe src="https://www.youtube.com/embed/E5RjzSK0fvY"></iframe>
+	<iframe src="https://www.youtube.com/embed/viHILXVY_eU"></iframe>
+	<iframe src="https://www.youtube.com/embed/q2a0kakk7NU"></iframe>
+</div>
+</body>
+<script>
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Not adding `{ audio: true }` since we only want video now
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        video.src = window.URL.createObjectURL(stream);
+        video.play();
+    });
+}
+else if(navigator.getUserMedia) { // Standard
+    navigator.getUserMedia({ video: true }, function(stream) {
+        video.src = stream;
+        video.play();
+    }, errBack);
+} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+    navigator.webkitGetUserMedia({ video: true }, function(stream){
+        video.src = window.webkitURL.createObjectURL(stream);
+        video.play();
+    }, errBack);
+} else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+    navigator.mozGetUserMedia({ video: true }, function(stream){
+        video.src = window.URL.createObjectURL(stream);
+        video.play();
+    }, errBack);
+}
+
+	var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var video = document.getElementById('video');
+
+// Trigger photo take
+document.getElementById("snap").addEventListener("click", function() {
+	context.drawImage(video, 0, 0, 640, 480);
+});
+function clrimg(){
+	context.clearRect(0, 0, 640, 480);
+}
+</script>
+</html>
